@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="15px" viewBox="0 0 21 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>UK</title>
+    <desc>Flag of the United Kingdom</desc>
+    <g fill="none" fill-rule="evenodd">
+        <!-- Background -->
+        <rect fill="#00247D" width="21" height="15"/>
+        <!-- Crosses -->
+        <path fill="#FFFFFF" d="M0 6h21v3H0z"/>
+        <path fill="#FFFFFF" d="M9 0h3v15H9z"/>
+        <!-- Diagonals -->
+        <path fill="#FFFFFF" d="M0 0l21 15h-3L0 3z"/>
+        <path fill="#FFFFFF" d="M21 0L0 15h3L21 3z"/>
+        <!-- Red overlays -->
+        <path fill="#CF142B" d="M0 7h21v1H0z"/>
+        <path fill="#CF142B" d="M10 0h1v15h-1z"/>
+        <path fill="#CF142B" d="M0 0l21 15h-1.5L0 1.5z"/>
+        <path fill="#CF142B" d="M21 0L0 15h1.5L21 1.5z"/>
+    </g>
+</svg>
