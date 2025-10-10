@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     website_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Whoxa Chat",
+      defaultValue: "Xaosao Chat",
     },
     website_email: {
       type: DataTypes.STRING,
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     copy_right: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Copyright by Whoxa Chat © 2025",
+      defaultValue: "Copyright by Xaosao Chat © 2025",
     },
     android_link: {
       type: DataTypes.STRING,

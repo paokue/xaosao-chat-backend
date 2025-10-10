@@ -13,7 +13,7 @@ async function checkWebsettingAndCreate() {
       return;
     } else {
       await Website_Setting.create({
-        website_name: "Whoxa Chat",
+        website_name: "Xaosao Chat",
         website_email: "demo@whoxa.com",
         website_text: "whoxa text",
         website_color_primary: "#ffff",
@@ -26,7 +26,7 @@ async function checkWebsettingAndCreate() {
         TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
         TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
         TWILIO_FROM_NUMBER: process.env.TWILIO_FROM_NUMBER,
-        copy_right: "Copyright by Whoxa Chat © 2025",
+        copy_right: "Copyright by Xaosao Chat © 2025",
       });
     }
   } catch (err) {

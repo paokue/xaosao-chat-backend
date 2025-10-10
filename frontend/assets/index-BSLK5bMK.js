@@ -70626,9 +70626,9 @@ function yue() {
               }),
               c.jsx(mue, {
                 data: {
-                  text: "Whoxa Chat",
+                  text: "Xaosao Chat",
                   url: `${window.location.origin}`,
-                  title: "Whoxa Chat",
+                  title: "Xaosao Chat",
                 },
                 children: c.jsx(Lr, {
                   icon: c.jsx(XV, { className: "text-lg" }),

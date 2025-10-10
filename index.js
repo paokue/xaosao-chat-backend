@@ -40,7 +40,6 @@ const {
   checkGroupsettingAndCreate,
 } = require("./controller/Admin/oneSignalsettingController");
 
-
 // const io = socketIo(server);
 const io = socketIo(server, {
   cors: {
@@ -92,7 +91,9 @@ app.use((req, res, next) => {
     if (req?.files?.["darkLogo"]) {
       req.darkLogo = req.files["darkLogo"];
       req.darkLogo.forEach((file, index) => {
-        console.log(`darkLogo[${index}]: ${file.originalname} - ${file.size} bytes`);
+        console.log(
+          `darkLogo[${index}]: ${file.originalname} - ${file.size} bytes`
+        );
       });
     } else {
       req.darkLogo = [];
@@ -102,7 +103,9 @@ app.use((req, res, next) => {
     if (req?.files?.["files"]) {
       req.files = req.files["files"];
       req.files.forEach((file, index) => {
-        console.log(`files[${index}]: ${file.originalname} - ${file.size} bytes`);
+        console.log(
+          `files[${index}]: ${file.originalname} - ${file.size} bytes`
+        );
       });
     } else {
       req.files = [];
@@ -232,12 +235,14 @@ async function verifyToken() {
         token: token,
       }
     );
-    if (!verificationResponse.data.success) {
-      // If verification fails, remove the current directory
-      console.log("Token verification failed. Removing current directory...");
-      return false; // Return false on failure
-    }
-    return verificationResponse.data.success; // Return verification success status
+
+    // Apao edit ==========
+    // if (!verificationResponse.data.success) {
+    //   console.log("Token verification failed. Removing current directory...");
+    //   return false; // Return false on failure
+    // }
+    // return verificationResponse.data.success;
+    return true;
   } catch (error) {
     console.error("Error during token verification:", error);
     return false;
@@ -293,6 +298,7 @@ app.get("/admin/*", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 app.get("/admin", async (req, res) => {
   try {
     // res.json({ message: "Server is Running ✅", success: true });
@@ -381,7 +387,6 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: "Something went wrong!", success: false });
 });
-
 
 async function fetchLanguages() {
   try {

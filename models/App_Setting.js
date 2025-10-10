@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     app_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "Whoxa Chat",
+      defaultValue: "Xaosao Chat",
     },
     app_email: {
       type: DataTypes.STRING,
