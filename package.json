@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build": "echo 'No build step needed for JS app' && exit 0",
+    "start": "bun run index.js"
   },
   "overrides": {
     "cookie": "^0.7.0",

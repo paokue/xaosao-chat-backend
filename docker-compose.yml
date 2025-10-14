@@ -1,0 +1,11 @@
+version: '3.5'
+services:
+  xaosao-chat-node-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"      
+    volumes:
+      - ./uploads:/usr/src/app/uploads 
+    restart: always

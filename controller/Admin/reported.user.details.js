@@ -4,7 +4,7 @@ async function getReportedUserDetail(req, res) {
     try{
         const { page = 1, limit = 10 } = req.body;
         const { user_id} = req.body;
-        const offset = (page - 1) * limit;
+        let offset = (page - 1) * limit;
 
         if (offset < 0) {
             offset = page * limit;
@@ -56,7 +56,7 @@ async function getReportedUserReports(req, res) {
     try {
         const { page = 1, limit = 10 } = req.body;
         const { user_id } = req.body;
-        const offset = (page - 1) * limit;
+        let offset = (page - 1) * limit;
 
         if (offset < 0) {
             offset = page * limit;
