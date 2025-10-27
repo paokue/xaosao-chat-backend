@@ -2,7 +2,7 @@
    "development": {
       "username": "root",
       "password": "pk11111111",
-      "database": "whoxa",
+      "database": "xaosao_db",
       "host": "localhost",
       "dialect": "mysql"
    },

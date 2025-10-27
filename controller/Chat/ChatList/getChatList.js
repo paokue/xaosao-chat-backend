@@ -3,7 +3,6 @@ const {
   Chat,
   ClearAllChat,
   Block,
-  Chatlock,
   Conversation,
   ConversationsUser,
   AllContact,
@@ -14,6 +13,8 @@ const { Op } = require("sequelize");
 
 const ChatList = async (io, socket, data) => {
   const user_id = socket.handshake.query.user_id;
+
+  console.log("PK GET CHAT LIST::::");
 
   try {
     // Fetch user conversations
@@ -41,6 +42,7 @@ const ChatList = async (io, socket, data) => {
         },
         order: [["updatedAt", "DESC"]],
       });
+
       var findLastMessage;
       let unread_count = 0;
 
@@ -82,31 +84,31 @@ const ChatList = async (io, socket, data) => {
 
       let last_message =
         String(clearAllChatRes?.message_id) ==
-          String(conversation.last_message_id)
+        String(conversation.last_message_id)
           ? ""
           : conversation.last_message_type == "delete_from_everyone"
-            ? conversation.last_message
-            : findLastMessage?.dataValues?.delete_for_me
+          ? conversation.last_message
+          : findLastMessage?.dataValues?.delete_for_me
               .split(",")
               .includes(String(user_id))
-              ? "🚫 You deleted this message!"
-              : isBlocked
-                ? findLastMessage?.dataValues?.message
-                : conversation.last_message;
+          ? "🚫 You deleted this message!"
+          : isBlocked
+          ? findLastMessage?.dataValues?.message
+          : conversation.last_message;
 
       let last_message_type =
         String(clearAllChatRes?.message_id) ==
-          String(conversation.last_message_id)
+        String(conversation.last_message_id)
           ? ""
           : conversation.last_message_type == "delete_from_everyone"
-            ? "text"
-            : findLastMessage?.dataValues?.delete_for_me
+          ? "text"
+          : findLastMessage?.dataValues?.delete_for_me
               .split(",")
               .includes(String(user_id))
-              ? "text"
-              : isBlocked
-                ? findLastMessage?.dataValues?.message_type
-                : conversation.last_message_type;
+          ? "text"
+          : isBlocked
+          ? findLastMessage?.dataValues?.message_type
+          : conversation.last_message_type;
 
       let chatDetail = {
         conversation_id: conversation.conversation_id,

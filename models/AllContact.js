@@ -19,9 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "",
     },
     added_by_me: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
+      type: DataTypes.STRING,
+      defaultValue: "",
     },
   });
 

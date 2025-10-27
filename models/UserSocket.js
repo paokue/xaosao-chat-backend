@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const UserSocket = sequelize.define("UserSocket", {
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     socketId: {

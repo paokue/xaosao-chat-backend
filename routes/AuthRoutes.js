@@ -74,7 +74,10 @@ const {
 const { createPoll } = require("../controller/Chat/Poll/createPoll");
 const { voteInPoll } = require("../controller/Chat/Poll/voteInPoll");
 const getPublicGroup = require("../controller/Chat/Group/getPublicGroup");
-const { giveReactionOnMessage } = require("../controller/Chat/MessageReaction/giveReactionOnMessage");
+const {
+  giveReactionOnMessage,
+} = require("../controller/Chat/MessageReaction/giveReactionOnMessage");
+const { getMyChatList } = require("../controller/Chat/ChatList/getMyChatlist");
 
 const router = express.Router();
 
@@ -106,7 +109,6 @@ router.post("/create-poll", createPoll);
 router.post("/vote", voteInPoll);
 router.post("/get-public-groups", getPublicGroup);
 router.post("/give-reaction", giveReactionOnMessage);
-
 
 // Star Message ==================================================================================
 router.post("/add-to-star-message", addToStarMessage);
@@ -145,6 +147,9 @@ router.post("/call-list", callList);
 // AllContact ==================================================================================
 router.post("/add-contact-name", addContactName);
 router.post("/my-contacts", getMyContacts);
+
+// Get my chatlist: ==================================================================================
+router.post("/my-chat-lists", getMyChatList);
 
 // Logout ==================================================================================
 router.post("/logout-user", logoutUser);

@@ -1,23 +1,143 @@
 const Telbiz = require("telbiz");
-const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const { User, Website_Setting } = require("../../models");
-const twilio = require("twilio");
-
-const baseUrl = process.env.baseUrl;
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
+const { User, Website_Setting } = require("../../models");
 
 const tb = new Telbiz(
   process.env.TELBIZ_CLIENT_ID,
   process.env.TELBIZ_SECRETKEY
 );
 
+const registerWithoutOtp = async (req, res) => {
+  try {
+    const {
+      user_id,
+      country_code,
+      phone_number,
+      country,
+      country_full_name,
+      device_token,
+      one_signal_player_id,
+      email_id,
+      first_name,
+      last_name,
+    } = req.body;
+
+    // 🧩 Validate required fields
+    if (!phone_number || !country_code) {
+      return res.status(400).json({
+        message: "country_code and phone_number are required!",
+        success: false,
+      });
+    }
+
+    let user = await User.findOne({
+      where: { country_code, phone_number },
+    });
+
+    // If not, create a new user
+    if (!user) {
+      user = await User.create({
+        user_id,
+        phone_number,
+        country_code,
+        country: country || "",
+        country_full_name: country_full_name || "",
+        email_id: email_id || "",
+        first_name: first_name || "",
+        last_name: last_name || "",
+        device_token: device_token || "",
+        one_signal_player_id: one_signal_player_id || "",
+      });
+    } else {
+      // Update device info if user already exists
+      await user.update({
+        device_token: device_token || "",
+        one_signal_player_id: one_signal_player_id || "",
+      });
+    }
+
+    // 🪪 Create JWT Token
+    const token = jwt.sign(user.dataValues, jwtSecretKey);
+
+    return res.status(200).json({
+      message: "User registered successfully!",
+      success: true,
+      token,
+      user,
+    });
+  } catch (error) {
+    console.error("Error in registerWithoutOtp:", error);
+    return res.status(500).json({
+      message: "Server error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const loginWithPhone = async (req, res) => {
+  const { phone_number, device_token, one_signal_player_id } = req.body;
+
+  console.log(
+    "Login Request:",
+    phone_number,
+    device_token,
+    one_signal_player_id
+  );
+
+  // Basic validation
+  if (!phone_number || phone_number.trim() === "") {
+    return res
+      .status(400)
+      .json({ message: "phone_number field is required!", success: false });
+  }
+
+  try {
+    // ✅ Find user only by phone number
+    const user = await User.findOne({ where: { phone_number } });
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "User not found!", success: false });
+    }
+
+    // ✅ Generate JWT token
+    const token = jwt.sign(user.dataValues, jwtSecretKey, {
+      expiresIn: "90d", // optional expiration time
+    });
+
+    // ✅ Update device token info if provided
+    if (device_token || one_signal_player_id) {
+      await User.update(
+        { device_token, one_signal_player_id },
+        { where: { phone_number } }
+      );
+    }
+
+    // ✅ Return success
+    return res.status(200).json({
+      message: "Login successful",
+      success: true,
+      token,
+      user,
+    });
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
 // Send OTP via SMS using Telbiz
 const registerPhone = async (req, res) => {
   let { country_code, phone_number, country, country_full_name } = req.body;
+
+  console.log(req.bod);
 
   if (!phone_number || phone_number === "") {
     return res
@@ -50,6 +170,7 @@ const registerPhone = async (req, res) => {
         if (!checkUser) {
           // Create new user
           await User.create({
+            user_id: "68736924b2574f63f8ee5578",
             phone_number,
             otp: generatedOtp,
             country_code,
@@ -85,6 +206,15 @@ const registerPhone = async (req, res) => {
 const verifyPhoneOtp = async (req, res) => {
   let { country_code, phone_number, otp, device_token, one_signal_player_id } =
     req.body;
+
+  console.log(
+    "Request DATA:::",
+    country_code,
+    phone_number,
+    otp,
+    device_token,
+    one_signal_player_id
+  );
 
   if (phone_number == "" || !phone_number) {
     return res
@@ -138,4 +268,9 @@ const verifyPhoneOtp = async (req, res) => {
   }
 };
 
-module.exports = { registerPhone, verifyPhoneOtp };
+module.exports = {
+  registerWithoutOtp,
+  loginWithPhone,
+  registerPhone,
+  verifyPhoneOtp,
+};

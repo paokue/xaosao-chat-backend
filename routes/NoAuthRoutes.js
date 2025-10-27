@@ -2,6 +2,8 @@ const express = require("express");
 const {
   registerPhone,
   verifyPhoneOtp,
+  registerWithoutOtp,
+  loginWithPhone,
 } = require("../controller/user/registerPhone");
 const { checkUserName } = require("../controller/user/userDetails");
 const { loginAdmin } = require("../controller/Admin/admin.login");
@@ -33,12 +35,9 @@ const {
 
 const router = express.Router();
 
-router.post(
-  "/register-phone",
-  // originCheck,
-  // phoneRegisterLimiter,
-  registerPhone
-); // register with email
+router.post("/register-without-otp", registerWithoutOtp); // register without otp
+router.post("/login-with-phone", loginWithPhone); // register without otp
+router.post("/register-phone", registerPhone); // register with email
 router.post("/verify-phone-otp", verifyPhoneOtp); // verify email otp
 router.post("/register-email", registerEmail); // register with email
 router.post("/verify-email-otp", verifyEmailOtp); // verify email otp

@@ -8,7 +8,9 @@ const {
 const {
   receiveMessage,
 } = require("../controller/Chat/MessageList/receiveMessage/receiveMessage");
-const { pinMessageListSocket } = require("../controller/Chat/PinMessage/pinMessageListSocket");
+const {
+  pinMessageListSocket,
+} = require("../controller/Chat/PinMessage/pinMessageListSocket");
 const { isTyping } = require("../controller/Typing/isTyping");
 const { userLastSeenList } = require("../controller/Typing/userLastSeenList");
 const {
@@ -29,6 +31,8 @@ function initSocket(io) {
     // Update the user last_seen
     console.log("New client connected", socket.id);
     const user_id = socket.handshake.query.user_id;
+
+    console.log("PK User ID:::", user_id);
 
     await User.update(
       { last_seen: 0 }, // Update only the last_seen field

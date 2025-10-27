@@ -1,10 +1,10 @@
-const jwt = require("jsonwebtoken");
 const {
   Status,
   StatusMedia,
   AllContact,
   User,
   StatusView,
+  sequelize,
 } = require("../../models");
 
 const statusList = async (req, res) => {
@@ -12,10 +12,20 @@ const statusList = async (req, res) => {
 
   try {
     // Get User list which are saved in user's contacts
+    // let allSavedContacts = await AllContact.findAll({
+    //   where: { user_id },
+    //   attributes: ["full_name", "phone_number"],
+    //   group: ["phone_number"], // Group by phone_number
+    // });
+
+    // apao_edit
     let allSavedContacts = await AllContact.findAll({
       where: { user_id },
-      attributes: ["full_name", "phone_number"],
-      group: ["phone_number"], // Group by phone_number
+      attributes: [
+        [sequelize.fn("ANY_VALUE", sequelize.col("full_name")), "full_name"],
+        "phone_number",
+      ],
+      group: ["phone_number"],
     });
 
     const statusListData = await Promise.all(
@@ -123,8 +133,6 @@ const statusList = async (req, res) => {
         return status;
       });
     }
-
-    // console.log(myStatusData);
 
     // Filter out entries where Statuses array is empty
     const filteredStatusListData = statusListData.filter(
