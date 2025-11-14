@@ -4,8 +4,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    networks:
+      - xaosao-share-network
     ports:
       - "9090:9090"      
     volumes:
       - ./uploads:/usr/src/app/uploads 
     restart: always
+networks:
+  xaosao-share-network:
+    external: false
