@@ -1,16 +1,21 @@
 version: '3.5'
+
 services:
-  xaosao-chat-node-api:
+  xaosao-chat-backend:
+    container_name: xaosao-chat-backend
     build:
       context: .
       dockerfile: Dockerfile
     networks:
-      - xaosao-share-network
+      xaosao-share-network:
+        aliases:
+          - xaosao-chat-backend
     ports:
-      - "9090:9090"      
+      - "9090:9090"
     volumes:
-      - ./uploads:/usr/src/app/uploads 
+      - ./uploads:/usr/src/app/uploads
     restart: always
+
 networks:
   xaosao-share-network:
-    external: false
+    external: true
