@@ -21,6 +21,7 @@ const registerWithoutOtp = async (req, res) => {
       email_id,
       first_name,
       last_name,
+      profile_image,
     } = req.body;
 
     // 🧩 Validate required fields
@@ -48,12 +49,14 @@ const registerWithoutOtp = async (req, res) => {
         last_name: last_name || "",
         device_token: device_token || "",
         one_signal_player_id: one_signal_player_id || "",
+        profile_image: profile_image || "",
       });
     } else {
       // Update device info if user already exists
       await user.update({
         device_token: device_token || "",
         one_signal_player_id: one_signal_player_id || "",
+        profile_image: profile_image || user.profile_image || "",
       });
     }
 

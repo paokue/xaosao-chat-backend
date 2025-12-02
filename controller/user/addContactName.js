@@ -2,8 +2,8 @@ const { AllContact, User } = require("../../models");
 
 const addContactName = async (req, res) => {
   let { phone_number, full_name, added_by_me, user_id } = req.body;
-  // added_by_me is user
-  // user_id is model
+  // added_by_me is customer id
+  // user_id is model id
 
   console.log("Credentials:::", phone_number, full_name, added_by_me);
 
@@ -44,7 +44,7 @@ const addContactName = async (req, res) => {
       );
       message = "Contact Updated Successfully";
     } else {
-      console.log("AAADDDD::", added_by_me, phone_number);
+      console.log("AAADDDD::", user_id, phone_number);
       let userDetails = await User.findOne({
         where: {
           user_id: user_id,
