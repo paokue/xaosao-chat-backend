@@ -78,6 +78,7 @@ const {
   giveReactionOnMessage,
 } = require("../controller/Chat/MessageReaction/giveReactionOnMessage");
 const { getMyChatList } = require("../controller/Chat/ChatList/getMyChatlist");
+const { updateUserProfile } = require("../controller/user/updateProfile");
 
 const router = express.Router();
 
@@ -147,6 +148,7 @@ router.post("/call-list", callList);
 // AllContact ==================================================================================
 router.post("/add-contact-name", addContactName);
 router.post("/my-contacts", getMyContacts);
+router.post("/update-profile", updateUserProfile);
 
 // Get my chatlist: ==================================================================================
 router.post("/my-chat-lists", getMyChatList);
